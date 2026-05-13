@@ -171,7 +171,20 @@
       allSlots.push(`${pad(h)}:00`);
       allSlots.push(`${pad(h)}:30`);
     }
-    const slots = allSlots.filter(s => s <= '19:30');
+    let slots = allSlots.filter(s => s <= '19:30');
+
+    // Si eligieron hoy, ocultar los turnos que ya pasaron
+    const isToday = toDateStr(state.date) === toDateStr(new Date());
+    if (isToday) {
+      const now  = new Date();
+      const curr = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+      slots = slots.filter(s => s > curr);
+    }
+
+    if (slots.length === 0) {
+      slotsEl.innerHTML = '<p class="timeslots__hint">No quedan turnos disponibles para hoy. Elegí otro día.</p>';
+      return;
+    }
 
     const grid = document.createElement('div');
     grid.className = 'timeslots__grid';
