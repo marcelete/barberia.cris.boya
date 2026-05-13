@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barber Boya — Haircuts & Shaves</title>
+  <meta name="description" content="Barbería profesional en Buenos Aires. Cortes, arreglo de barba y más. Turnos online." />
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#inicio" class="nav__logo">
+        <img src="assets/logo.png" alt="Barber Boya" />
+      </a>
+      <button class="nav__toggle" id="navToggle" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#barbero">El Barbero</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="#reservar" class="btn btn--gold">Reservar Turno</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero__bg">
+      <img src="assets/foto1.jpg" alt="Barber Boya" class="hero__img" />
+      <div class="hero__overlay"></div>
+    </div>
+    <div class="hero__content">
+      <img src="assets/logo.png" alt="Barber Boya" class="hero__logo" />
+      <p class="hero__tagline">Barbero profesional · Buenos Aires</p>
+      <a href="#reservar" class="btn btn--gold btn--lg">Reservar Turno</a>
+    </div>
+    <a href="#servicios" class="hero__scroll" aria-label="Scroll">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="section servicios" id="servicios">
+    <div class="container">
+      <h2 class="section__title">Servicios</h2>
+      <p class="section__sub">Todos los trabajos incluyen toalla caliente y finalización con productos premium</p>
+      <div class="servicios__grid">
+        <div class="servicio-card" data-service="Arreglo de Barba" data-price="23500">
+          <div class="servicio-card__icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 8c0 0 2 4 2 8s-4 8-4 12 4 8 10 8 10-4 10-8-4-8-4-12 2-8 2-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M10 36l4-4M38 36l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="servicio-card__name">Arreglo de Barba</h3>
+          <p class="servicio-card__price">$23.500</p>
+          <a href="#reservar" class="btn btn--outline" data-prefill="Arreglo de Barba">Reservar</a>
+        </div>
+
+        <div class="servicio-card" data-service="Corte" data-price="24500">
+          <div class="servicio-card__icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M32 8L16 32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M16 8L32 32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="11" cy="36" r="4" stroke="currentColor" stroke-width="2"/>
+              <circle cx="37" cy="36" r="4" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3 class="servicio-card__name">Corte</h3>
+          <p class="servicio-card__price">$24.500</p>
+          <a href="#reservar" class="btn btn--outline" data-prefill="Corte">Reservar</a>
+        </div>
+
+        <div class="servicio-card" data-service="Corte Niño" data-price="23500">
+          <div class="servicio-card__icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="14" r="6" stroke="currentColor" stroke-width="2"/>
+              <path d="M14 40c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M30 10L36 8M18 10L12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="servicio-card__name">Corte Niño</h3>
+          <p class="servicio-card__price">$23.500</p>
+          <a href="#reservar" class="btn btn--outline" data-prefill="Corte Niño">Reservar</a>
+        </div>
+
+        <div class="servicio-card servicio-card--featured" data-service="Corte y Barba" data-price="33000">
+          <div class="servicio-card__badge">Popular</div>
+          <div class="servicio-card__icon">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M32 8L16 32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M16 8L32 32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="11" cy="36" r="4" stroke="currentColor" stroke-width="2"/>
+              <circle cx="37" cy="36" r="4" stroke="currentColor" stroke-width="2"/>
+              <path d="M20 20c2 2 6 2 8 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="servicio-card__name">Corte y Barba</h3>
+          <p class="servicio-card__price">$33.000</p>
+          <a href="#reservar" class="btn btn--gold" data-prefill="Corte y Barba">Reservar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section class="section galeria" id="galeria">
+    <div class="container">
+      <h2 class="section__title">Galería</h2>
+      <p class="section__sub">El trabajo habla por sí solo</p>
+      <div class="galeria__grid">
+        <div class="galeria__item galeria__item--tall">
+          <img src="assets/foto1.jpg" alt="Cristian trabajando" loading="lazy" />
+        </div>
+        <div class="galeria__item">
+          <img src="assets/foto2.jpg" alt="Arreglo de barba" loading="lazy" />
+        </div>
+        <div class="galeria__item">
+          <img src="assets/foto3.jpg" alt="Corte de cabello" loading="lazy" />
+        </div>
+        <div class="galeria__item galeria__item--wide">
+          <img src="assets/foto4.jpg" alt="Herramientas" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EL BARBERO -->
+  <section class="section barbero" id="barbero">
+    <div class="container barbero__inner">
+      <div class="barbero__img-wrap">
+        <img src="assets/foto3.jpg" alt="Cristian Boyatjián" loading="lazy" />
+      </div>
+      <div class="barbero__text">
+        <span class="section__label">El Barbero</span>
+        <h2 class="section__title section__title--left">Cristian Boyatjián</h2>
+        <p>Barbero profesional con años de experiencia en cortes modernos y clásicos. Especializado en degradados, perfilados y arreglo de barba con navaja.</p>
+        <p>Cada cliente recibe atención personalizada para lograr el look que mejor le sienta. La barbería es un espacio de confianza donde el detalle hace la diferencia.</p>
+        <div class="barbero__horarios">
+          <h4>Horarios de atención</h4>
+          <ul>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Martes a Viernes: 11:00 – 20:00
+            </li>
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Sábados: 12:00 – 20:00
+            </li>
+            <li class="cerrado">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M15 9l-6 6M9 9l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Domingos y Lunes: Cerrado
+            </li>
+          </ul>
+        </div>
+        <a href="#reservar" class="btn btn--gold">Reservar un turno</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVAR TURNO -->
+  <section class="section reservar" id="reservar">
+    <div class="container">
+      <h2 class="section__title">Reservar Turno</h2>
+      <p class="section__sub">Elegí tu servicio, fecha y horario en pocos pasos</p>
+
+      <!-- STEPPER -->
+      <div class="stepper" id="stepper">
+        <div class="stepper__step active" data-step="1">
+          <span class="stepper__num">1</span>
+          <span class="stepper__label">Servicio</span>
+        </div>
+        <div class="stepper__line"></div>
+        <div class="stepper__step" data-step="2">
+          <span class="stepper__num">2</span>
+          <span class="stepper__label">Profesional</span>
+        </div>
+        <div class="stepper__line"></div>
+        <div class="stepper__step" data-step="3">
+          <span class="stepper__num">3</span>
+          <span class="stepper__label">Fecha y Hora</span>
+        </div>
+        <div class="stepper__line"></div>
+        <div class="stepper__step" data-step="4">
+          <span class="stepper__num">4</span>
+          <span class="stepper__label">Confirmar</span>
+        </div>
+      </div>
+
+      <!-- BOOKING PANELS -->
+      <div class="booking" id="booking">
+
+        <!-- STEP 1: SERVICE -->
+        <div class="booking__panel active" id="panel-1">
+          <h3 class="booking__panel-title">¿Qué servicio necesitás?</h3>
+          <div class="booking__services">
+            <button class="booking__service-btn" data-service="Arreglo de Barba" data-price="23500">
+              <span class="booking__service-name">Arreglo de Barba</span>
+              <span class="booking__service-price">$23.500</span>
+            </button>
+            <button class="booking__service-btn" data-service="Corte" data-price="24500">
+              <span class="booking__service-name">Corte</span>
+              <span class="booking__service-price">$24.500</span>
+            </button>
+            <button class="booking__service-btn" data-service="Corte Niño" data-price="23500">
+              <span class="booking__service-name">Corte Niño</span>
+              <span class="booking__service-price">$23.500</span>
+            </button>
+            <button class="booking__service-btn" data-service="Corte y Barba" data-price="33000">
+              <span class="booking__service-name">Corte y Barba</span>
+              <span class="booking__service-price">$33.000</span>
+              <span class="booking__service-tag">Popular</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: PROFESSIONAL -->
+        <div class="booking__panel" id="panel-2">
+          <h3 class="booking__panel-title">¿Con quién querés atenderte?</h3>
+          <div class="booking__barbers">
+            <button class="booking__barber-btn selected" data-barber="Cristian">
+              <img src="assets/foto2.jpg" alt="Cristian" />
+              <div>
+                <strong>Cristian Boyatjián</strong>
+                <span>Barbero profesional</span>
+              </div>
+              <svg class="booking__barber-check" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M8 12l3 3 5-5" stroke="#0d0d0d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <div class="booking__nav">
+            <button class="btn btn--outline" id="back-2">Atrás</button>
+            <button class="btn btn--gold" id="next-2">Siguiente</button>
+          </div>
+        </div>
+
+        <!-- STEP 3: DATE & TIME -->
+        <div class="booking__panel" id="panel-3">
+          <h3 class="booking__panel-title">Elegí fecha y horario</h3>
+          <div class="booking__datetime">
+            <div class="calendar" id="calendar">
+              <div class="calendar__header">
+                <button class="calendar__nav" id="calPrev" aria-label="Mes anterior">&#8249;</button>
+                <span class="calendar__month" id="calMonth"></span>
+                <button class="calendar__nav" id="calNext" aria-label="Mes siguiente">&#8250;</button>
+              </div>
+              <div class="calendar__weekdays">
+                <span>Dom</span><span>Lun</span><span>Mar</span>
+                <span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span>
+              </div>
+              <div class="calendar__days" id="calDays"></div>
+            </div>
+            <div class="timeslots" id="timeslots">
+              <p class="timeslots__hint">Seleccioná una fecha para ver los turnos disponibles</p>
+            </div>
+          </div>
+          <div class="booking__nav">
+            <button class="btn btn--outline" id="back-3">Atrás</button>
+            <button class="btn btn--gold" id="next-3" disabled>Siguiente</button>
+          </div>
+        </div>
+
+        <!-- STEP 4: CONFIRM -->
+        <div class="booking__panel" id="panel-4">
+          <h3 class="booking__panel-title">Confirmá tu turno</h3>
+          <div class="booking__summary" id="bookingSummary">
+            <div class="booking__summary-row">
+              <span>Servicio</span><strong id="sum-service">—</strong>
+            </div>
+            <div class="booking__summary-row">
+              <span>Profesional</span><strong id="sum-barber">Cristian Boyatjián</strong>
+            </div>
+            <div class="booking__summary-row">
+              <span>Fecha</span><strong id="sum-date">—</strong>
+            </div>
+            <div class="booking__summary-row">
+              <span>Horario</span><strong id="sum-time">—</strong>
+            </div>
+            <div class="booking__summary-row booking__summary-row--total">
+              <span>Total</span><strong id="sum-price">—</strong>
+            </div>
+          </div>
+          <p class="booking__confirm-note">Al hacer click en <em>Confirmar por WhatsApp</em> te vamos a redirigir a WhatsApp con los datos de tu turno para que Cristian lo confirme.</p>
+          <div class="booking__nav booking__nav--center">
+            <button class="btn btn--outline" id="back-4">Atrás</button>
+            <a class="btn btn--gold btn--lg btn--whatsapp" id="confirmWhatsapp" href="#" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.555 4.122 1.524 5.856L0 24l6.335-1.502A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.015-1.378l-.36-.214-3.727.883.935-3.618-.235-.372A9.792 9.792 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+              Confirmar por WhatsApp
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="section contacto" id="contacto">
+    <div class="container contacto__inner">
+      <div class="contacto__info">
+        <span class="section__label">Contacto</span>
+        <h2 class="section__title section__title--left">Encontranos</h2>
+        <div class="contacto__items">
+          <a class="contacto__item" href="https://wa.me/5491155778760" target="_blank" rel="noopener">
+            <div class="contacto__item-icon contacto__item-icon--green">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.555 4.122 1.524 5.856L0 24l6.335-1.502A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.015-1.378l-.36-.214-3.727.883.935-3.618-.235-.372A9.792 9.792 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+            </div>
+            <div>
+              <strong>WhatsApp</strong>
+              <span>+54 9 11 5577-8760</span>
+            </div>
+          </a>
+
+          <a class="contacto__item" href="https://www.instagram.com/barber_boya/" target="_blank" rel="noopener">
+            <div class="contacto__item-icon contacto__item-icon--ig">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </div>
+            <div>
+              <strong>Instagram</strong>
+              <span>@barber_boya</span>
+            </div>
+          </a>
+
+          <div class="contacto__item contacto__item--static">
+            <div class="contacto__item-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 7v5l3 3"/></svg>
+            </div>
+            <div>
+              <strong>Horarios</strong>
+              <span>Mar–Vie 11:00–20:00 · Sáb 12:00–20:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contacto__cta">
+        <img src="assets/logo.png" alt="Barber Boya" />
+        <p>¿Tenés alguna consulta? Escribinos directamente por WhatsApp.</p>
+        <a href="https://wa.me/5491155778760?text=Hola%20Cristian%2C%20quería%20hacerte%20una%20consulta" class="btn btn--gold btn--lg" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <img src="assets/logo.png" alt="Barber Boya" class="footer__logo" />
+      <p class="footer__copy">© 2026 Barber Boya · Todos los derechos reservados</p>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/barber_boya/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a href="https://wa.me/5491155778760" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.555 4.122 1.524 5.856L0 24l6.335-1.502A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.015-1.378l-.36-.214-3.727.883.935-3.618-.235-.372A9.792 9.792 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a class="whatsapp-float" href="https://wa.me/5491155778760?text=Hola%20Cristian%2C%20quería%20reservar%20un%20turno" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.555 4.122 1.524 5.856L0 24l6.335-1.502A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.015-1.378l-.36-.214-3.727.883.935-3.618-.235-.372A9.792 9.792 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+  </a>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
