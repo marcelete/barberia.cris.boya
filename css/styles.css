@@ -151,6 +151,8 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .nav__links .btn { color: #0d0d0d; }
 .nav__links .btn:hover { color: #0d0d0d; }
 
+.nav__cta { display: none; }
+
 .nav__toggle {
   display: none;
   flex-direction: column;
@@ -819,13 +821,22 @@ a.contacto__item:hover { border-color: var(--gold); transform: translateX(4px); 
 }
 
 @media (max-width: 700px) {
-  /* En mobile el nav siempre tiene fondo oscuro, no depende del scroll */
+  /* Nav always has dark background on mobile */
   .nav {
     background: rgba(13,13,13,.97);
     backdrop-filter: blur(12px);
     box-shadow: 0 1px 0 var(--border);
   }
 
+  /* Always-visible Reservar Turno button in the nav bar */
+  .nav__cta {
+    display: inline-flex;
+    font-size: .8rem;
+    padding: .45rem .9rem;
+    margin-left: auto;
+  }
+
+  /* Hamburger dropdown — navigation links only */
   .nav__links {
     position: fixed;
     top: 72px; left: 0; right: 0;
@@ -836,14 +847,20 @@ a.contacto__item:hover { border-color: var(--gold); transform: translateX(4px); 
     padding: 1.5rem;
     gap: 1.2rem;
     border-top: 1px solid var(--border);
-    transform: translateY(-110%);
-    transition: transform var(--transition);
+    transform: translateY(-100%);
+    visibility: hidden;
+    transition: transform .3s ease, visibility .3s ease;
     pointer-events: none;
   }
   .nav__links.open {
     transform: translateY(0);
+    visibility: visible;
     pointer-events: all;
   }
+
+  /* Hide the Reservar Turno btn from inside the dropdown */
+  .nav__links li:last-child { display: none; }
+
   .nav__toggle { display: flex; }
 
   .booking__services { grid-template-columns: 1fr; }
