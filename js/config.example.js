@@ -6,5 +6,5 @@
 //    (Settings > API en el panel de Supabase)
 // ============================================================
 
-window.SUPABASE_URL      = 'https://TU-PROJECT-ID.supabase.co';
-window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...tu-anon-key';
+window.SUPABASE_URL      = 'https://supabase.com/dashboard/project/nwaxbyezughgmtssekmm/';
+window.SUPABASE_ANON_KEY = 'sb_publishable_b932eqWqj9r3KUKhfOts0Q_W10nxije';
