@@ -21,8 +21,6 @@
 .admin-login__logo {
   height: 72px;
   width: auto;
-  filter: invert(1);
-  mix-blend-mode: screen;
   margin: 0 auto 1.5rem;
 }
 
@@ -69,8 +67,6 @@
 .admin-header__logo img {
   height: 40px;
   width: auto;
-  filter: invert(1);
-  mix-blend-mode: screen;
 }
 
 .admin-header__views {

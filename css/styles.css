@@ -130,8 +130,6 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .nav__logo img {
   height: 48px;
   width: auto;
-  filter: invert(1);
-  mix-blend-mode: screen;
   transition: opacity var(--transition);
 }
 .nav__logo:hover img { opacity: .75; }
@@ -209,8 +207,6 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 
 .hero__logo {
   width: min(260px, 55vw);
-  filter: invert(1);
-  mix-blend-mode: screen;
   animation: fadeUp .8s ease both;
 }
 
@@ -753,9 +749,7 @@ a.contacto__item:hover { border-color: var(--gold); transform: translateX(4px); 
 }
 .contacto__cta img {
   width: 140px;
-  filter: invert(1);
-  mix-blend-mode: screen;
-  opacity: .2;
+  opacity: .35;
 }
 .contacto__cta p { color: var(--muted); font-size: .95rem; max-width: 260px; line-height: 1.7; }
 
@@ -777,9 +771,7 @@ a.contacto__item:hover { border-color: var(--gold); transform: translateX(4px); 
 .footer__logo {
   height: 44px;
   width: auto;
-  filter: invert(1);
-  mix-blend-mode: screen;
-  opacity: .3;
+  opacity: .35;
 }
 
 .footer__copy { font-size: .8rem; color: #444; }
