@@ -130,7 +130,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .nav__logo img {
   height: 48px;
   width: auto;
-  filter: brightness(0) invert(1);
+  filter: invert(1);
   transition: opacity var(--transition);
 }
 .nav__logo:hover img { opacity: .75; }
@@ -145,10 +145,10 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .nav__links a {
   font-size: .9rem;
   font-weight: 500;
-  color: var(--muted);
+  color: var(--text);
   transition: color var(--transition);
 }
-.nav__links a:hover { color: var(--text); }
+.nav__links a:hover { color: var(--gold); }
 .nav__links .btn { color: #0d0d0d; }
 .nav__links .btn:hover { color: #0d0d0d; }
 
@@ -208,7 +208,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 
 .hero__logo {
   width: min(260px, 55vw);
-  filter: brightness(0) invert(1);
+  filter: invert(1);
   animation: fadeUp .8s ease both;
 }
 
@@ -487,6 +487,7 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   flex-direction: column;
   gap: .35rem;
   transition: var(--transition);
+  color: var(--text);
 }
 .booking__service-btn:hover { border-color: var(--gold); }
 .booking__service-btn.selected {
@@ -750,7 +751,7 @@ a.contacto__item:hover { border-color: var(--gold); transform: translateX(4px); 
 }
 .contacto__cta img {
   width: 140px;
-  filter: brightness(0) invert(1);
+  filter: invert(1);
   opacity: .2;
 }
 .contacto__cta p { color: var(--muted); font-size: .95rem; max-width: 260px; line-height: 1.7; }
@@ -773,7 +774,7 @@ a.contacto__item:hover { border-color: var(--gold); transform: translateX(4px); 
 .footer__logo {
   height: 44px;
   width: auto;
-  filter: brightness(0) invert(1);
+  filter: invert(1);
   opacity: .3;
 }
 
