@@ -819,9 +819,17 @@ a.contacto__item:hover { border-color: var(--gold); transform: translateX(4px); 
 }
 
 @media (max-width: 700px) {
+  /* En mobile el nav siempre tiene fondo oscuro, no depende del scroll */
+  .nav {
+    background: rgba(13,13,13,.97);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--border);
+  }
+
   .nav__links {
     position: fixed;
     top: 72px; left: 0; right: 0;
+    z-index: 99;
     background: rgba(13,13,13,.97);
     backdrop-filter: blur(16px);
     flex-direction: column;
