@@ -273,30 +273,72 @@
         <!-- STEP 4: CONFIRM -->
         <div class="booking__panel" id="panel-4">
           <h3 class="booking__panel-title">Confirmá tu turno</h3>
-          <div class="booking__summary" id="bookingSummary">
-            <div class="booking__summary-row">
-              <span>Servicio</span><strong id="sum-service">—</strong>
+
+          <!-- Formulario principal -->
+          <div id="step4Form">
+            <div class="booking__summary">
+              <div class="booking__summary-row">
+                <span>Servicio</span><strong id="sum-service">—</strong>
+              </div>
+              <div class="booking__summary-row">
+                <span>Profesional</span><strong>Cristian Boyatjián</strong>
+              </div>
+              <div class="booking__summary-row">
+                <span>Fecha</span><strong id="sum-date">—</strong>
+              </div>
+              <div class="booking__summary-row">
+                <span>Horario</span><strong id="sum-time">—</strong>
+              </div>
+              <div class="booking__summary-row booking__summary-row--total">
+                <span>Total</span><strong id="sum-price">—</strong>
+              </div>
             </div>
-            <div class="booking__summary-row">
-              <span>Profesional</span><strong id="sum-barber">Cristian Boyatjián</strong>
+
+            <div class="booking__client-form">
+              <div class="form-group">
+                <label for="clientName">Tu nombre completo</label>
+                <input type="text" id="clientName" placeholder="Ej: Juan Pérez" autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label for="clientPhone">Tu WhatsApp</label>
+                <input type="tel" id="clientPhone" placeholder="Ej: 11 5577-8760" autocomplete="tel" />
+              </div>
             </div>
-            <div class="booking__summary-row">
-              <span>Fecha</span><strong id="sum-date">—</strong>
-            </div>
-            <div class="booking__summary-row">
-              <span>Horario</span><strong id="sum-time">—</strong>
-            </div>
-            <div class="booking__summary-row booking__summary-row--total">
-              <span>Total</span><strong id="sum-price">—</strong>
+
+            <p id="bookingError" class="booking__error hidden"></p>
+
+            <div class="booking__nav">
+              <button class="btn btn--outline" id="back-4">Atrás</button>
+              <button class="btn btn--gold btn--lg" id="confirmBtn">Confirmar Turno</button>
             </div>
           </div>
-          <p class="booking__confirm-note">Al hacer click en <em>Confirmar por WhatsApp</em> te vamos a redirigir a WhatsApp con los datos de tu turno para que Cristian lo confirme.</p>
-          <div class="booking__nav booking__nav--center">
-            <button class="btn btn--outline" id="back-4">Atrás</button>
-            <a class="btn btn--gold btn--lg btn--whatsapp" id="confirmWhatsapp" href="#" target="_blank" rel="noopener">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.555 4.122 1.524 5.856L0 24l6.335-1.502A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.015-1.378l-.36-.214-3.727.883.935-3.618-.235-.372A9.792 9.792 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
-              Confirmar por WhatsApp
-            </a>
+
+          <!-- Estado de éxito (oculto hasta confirmar) -->
+          <div id="bookingSuccess" class="booking__success hidden">
+            <div class="success__icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="11" fill="var(--gold)"/>
+                <path d="M7 12l3.5 3.5L17 9" stroke="#0d0d0d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>¡Turno confirmado, <span id="successName"></span>!</h3>
+            <p id="successDetail" class="success__detail"></p>
+
+            <div class="success__cancel-box">
+              <p>Guardá este link para cancelar si lo necesitás:</p>
+              <a id="successCancelLink" href="#" class="success__cancel-url" target="_blank" rel="noopener">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+                <span id="successCancelDisplay"></span>
+              </a>
+            </div>
+
+            <div class="success__actions">
+              <a id="successWhatsApp" href="#" class="btn btn--whatsapp" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.555 4.122 1.524 5.856L0 24l6.335-1.502A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.015-1.378l-.36-.214-3.727.883.935-3.618-.235-.372A9.792 9.792 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+                Avisar a Cristian por WhatsApp
+              </a>
+              <button class="btn btn--outline" onclick="location.reload()">Reservar otro turno</button>
+            </div>
           </div>
         </div>
 
@@ -372,6 +414,9 @@
     <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.555 4.122 1.524 5.856L0 24l6.335-1.502A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.015-1.378l-.36-.214-3.727.883.935-3.618-.235-.372A9.792 9.792 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
   </a>
 
+  <script src="js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/booking.js"></script>
 </body>
 </html>

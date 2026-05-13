@@ -1,0 +1,3 @@
+# Credenciales Supabase — no commitear con valores reales
+# (la anon key de Supabase es pública por diseño, pero mejor gestionarla por separado)
+js/config.js

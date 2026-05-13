@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cancelar turno — Barber Boya</title>
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <nav class="nav scrolled" id="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <img src="assets/logo.png" alt="Barber Boya" />
+      </a>
+    </div>
+  </nav>
+
+  <main class="cancelar-page">
+    <div class="cancelar-card">
+
+      <!-- Cargando -->
+      <div id="stateLoading">
+        <div class="cancelar-spinner"></div>
+        <h2>Procesando...</h2>
+        <p>Estamos cancelando tu turno, un momento.</p>
+      </div>
+
+      <!-- Éxito -->
+      <div id="stateSuccess" class="hidden">
+        <div class="cancelar-icon cancelar-icon--success">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <h2>Turno cancelado</h2>
+        <p id="successMsg">Tu turno fue cancelado exitosamente. El horario quedó disponible para otros clientes.</p>
+        <a href="index.html" class="btn btn--gold">Reservar un nuevo turno</a>
+      </div>
+
+      <!-- Error -->
+      <div id="stateError" class="hidden">
+        <div class="cancelar-icon cancelar-icon--error">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </div>
+        <h2>No se pudo cancelar</h2>
+        <p>El link de cancelación no es válido o el turno ya fue cancelado anteriormente.</p>
+        <a href="https://wa.me/5491155778760?text=Hola%20Cristian%2C%20necesito%20ayuda%20para%20cancelar%20mi%20turno"
+           class="btn btn--gold" target="_blank" rel="noopener">
+          Contactar a Cristian por WhatsApp
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script>
+    (async () => {
+      const params = new URLSearchParams(window.location.search);
+      const token  = params.get('token');
+
+      function show(id) {
+        ['stateLoading', 'stateSuccess', 'stateError'].forEach(s =>
+          document.getElementById(s).classList.toggle('hidden', s !== id)
+        );
+      }
+
+      if (!token) { show('stateError'); return; }
+
+      const SUPABASE_URL      = window.SUPABASE_URL      || '';
+      const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || '';
+
+      if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+        show('stateError'); return;
+      }
+
+      try {
+        const res = await fetch(`${SUPABASE_URL}/functions/v1/cancel-booking`, {
+          method: 'POST',
+          headers: {
+            'Content-Type':  'application/json',
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify({ token }),
+        });
+
+        const result = await res.json();
+
+        if (result.success && result.booking) {
+          const b = result.booking;
+          // Format date: "2026-05-20" → readable
+          const [y, m, d] = b.date.split('-').map(Number);
+          const dateStr = new Date(y, m - 1, d).toLocaleDateString('es-AR', {
+            weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+          });
+          document.getElementById('successMsg').textContent =
+            `Tu turno de ${b.service} del ${dateStr} a las ${b.time} hs fue cancelado. ` +
+            `El horario quedó disponible para otros clientes.`;
+          show('stateSuccess');
+        } else {
+          show('stateError');
+        }
+      } catch {
+        show('stateError');
+      }
+    })();
+  </script>
+
+</body>
+</html>
