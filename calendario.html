@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agenda — Barber Boya</title>
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/calendario.css" />
+</head>
+<body class="admin-body">
+
+<!-- ═══ LOGIN ════════════════════════════════════════════════════════════════ -->
+<div id="loginState" class="admin-login">
+  <div class="admin-login__card">
+    <img src="assets/logo.png" alt="Barber Boya" class="admin-login__logo" />
+    <h1 class="admin-login__title">Agenda</h1>
+    <p class="admin-login__sub">Acceso exclusivo para el equipo de Barber Boya</p>
+
+    <form id="loginForm" class="admin-login__form" novalidate>
+      <div class="form-group">
+        <label for="adminEmail">Email</label>
+        <input type="email" id="adminEmail" placeholder="tu@email.com" autocomplete="email" required />
+      </div>
+      <div class="form-group">
+        <label for="adminPassword">Contraseña</label>
+        <input type="password" id="adminPassword" placeholder="••••••••" autocomplete="current-password" required />
+      </div>
+      <p id="loginError" class="admin-login__error hidden"></p>
+      <button type="submit" id="loginBtn" class="btn btn--gold" style="width:100%;justify-content:center;">
+        Entrar
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD ════════════════════════════════════════════════════════════ -->
+<div id="dashboardState" class="hidden">
+
+  <!-- Header -->
+  <header class="admin-header">
+    <a href="index.html" class="admin-header__logo">
+      <img src="assets/logo.png" alt="Barber Boya" />
+    </a>
+
+    <div class="admin-header__views">
+      <button id="btnViewList" class="view-btn active">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Lista
+      </button>
+      <button id="btnViewGrid" class="view-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Calendario
+      </button>
+    </div>
+
+    <button id="logoutBtn" class="btn btn--outline btn--sm">Cerrar sesión</button>
+  </header>
+
+  <!-- ── VISTA LISTA ───────────────────────────────────────────── -->
+  <div id="listView" class="admin-content">
+    <div class="admin-toolbar">
+      <h2 class="admin-toolbar__title">Turnos</h2>
+      <div class="admin-filters">
+        <button class="filter-btn active" data-filter="upcoming">Próximos</button>
+        <button class="filter-btn" data-filter="all">Todos</button>
+      </div>
+      <span id="listCount" class="admin-count"></span>
+    </div>
+
+    <div id="listLoading" class="admin-loading">
+      <div class="cancelar-spinner"></div>
+      <p>Cargando turnos...</p>
+    </div>
+
+    <div id="listEmpty" class="admin-empty hidden">
+      <p>No hay turnos para mostrar.</p>
+    </div>
+
+    <div id="listContainer" class="booking-list hidden"></div>
+  </div>
+
+  <!-- ── VISTA CALENDARIO ──────────────────────────────────────── -->
+  <div id="gridView" class="admin-content hidden">
+    <div class="admin-toolbar">
+      <button class="admin-cal-nav" id="gridPrev">&#8249;</button>
+      <h2 class="admin-toolbar__title" id="gridMonthLabel"></h2>
+      <button class="admin-cal-nav" id="gridNext">&#8250;</button>
+    </div>
+
+    <div class="admin-grid">
+      <div class="admin-grid__weekdays">
+        <span>Dom</span><span>Lun</span><span>Mar</span>
+        <span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span>
+      </div>
+      <div class="admin-grid__days" id="gridDays"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ MODAL DETALLE ════════════════════════════════════════════════════════ -->
+<div id="bookingModal" class="admin-modal hidden">
+  <div class="admin-modal__backdrop" id="modalBackdrop"></div>
+  <div class="admin-modal__card">
+    <button class="admin-modal__close" id="modalClose">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <h3 class="admin-modal__title">Detalle del turno</h3>
+    <div id="modalContent" class="admin-modal__body"></div>
+    <div class="admin-modal__actions">
+      <button id="modalCancelBtn" class="btn btn--outline btn--danger">Cancelar turno</button>
+      <button id="modalCloseBtn" class="btn btn--gold">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  // ── SUPABASE ────────────────────────────────────────────────────────────────
+  const SUPABASE_URL      = window.SUPABASE_URL      || '';
+  const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || '';
+
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    document.getElementById('loginError').textContent =
+      'Configuración de Supabase incompleta. Revisá js/config.js.';
+    document.getElementById('loginError').classList.remove('hidden');
+  }
+
+  const { createClient } = window.supabase;
+  const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // ── STATE ───────────────────────────────────────────────────────────────────
+  let allBookings  = [];
+  let currentFilter = 'upcoming'; // 'upcoming' | 'all'
+  let currentView   = 'list';     // 'list' | 'grid'
+  let gridYear, gridMonth;
+  let activeBooking = null;       // booking shown in modal
+
+  // ── AUTH CHECK ──────────────────────────────────────────────────────────────
+  (async () => {
+    const { data: { session } } = await db.auth.getSession();
+    if (session) await showDashboard();
+  })();
+
+  // ── LOGIN ───────────────────────────────────────────────────────────────────
+  document.getElementById('loginForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const email    = document.getElementById('adminEmail').value.trim();
+    const password = document.getElementById('adminPassword').value;
+    const errEl    = document.getElementById('loginError');
+    const btn      = document.getElementById('loginBtn');
+
+    errEl.classList.add('hidden');
+    btn.disabled    = true;
+    btn.textContent = 'Ingresando...';
+
+    const { error } = await db.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      errEl.textContent = 'Email o contraseña incorrectos.';
+      errEl.classList.remove('hidden');
+      btn.disabled    = false;
+      btn.textContent = 'Entrar';
+      return;
+    }
+
+    await showDashboard();
+  });
+
+  // ── LOGOUT ──────────────────────────────────────────────────────────────────
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await db.auth.signOut();
+    document.getElementById('dashboardState').classList.add('hidden');
+    document.getElementById('loginState').classList.remove('hidden');
+  });
+
+  // ── DASHBOARD ───────────────────────────────────────────────────────────────
+  async function showDashboard() {
+    document.getElementById('loginState').classList.add('hidden');
+    document.getElementById('dashboardState').classList.remove('hidden');
+    await loadBookings();
+    renderListView();
+  }
+
+  async function loadBookings() {
+    const { data, error } = await db
+      .from('bookings')
+      .select('*')
+      .order('date', { ascending: true })
+      .order('time', { ascending: true });
+
+    if (error) { console.error(error); return; }
+    allBookings = data || [];
+  }
+
+  // ── VIEW TOGGLE ─────────────────────────────────────────────────────────────
+  document.getElementById('btnViewList').addEventListener('click', () => {
+    currentView = 'list';
+    document.getElementById('btnViewList').classList.add('active');
+    document.getElementById('btnViewGrid').classList.remove('active');
+    document.getElementById('listView').classList.remove('hidden');
+    document.getElementById('gridView').classList.add('hidden');
+  });
+
+  document.getElementById('btnViewGrid').addEventListener('click', () => {
+    currentView = 'grid';
+    document.getElementById('btnViewGrid').classList.add('active');
+    document.getElementById('btnViewList').classList.remove('active');
+    document.getElementById('gridView').classList.remove('hidden');
+    document.getElementById('listView').classList.add('hidden');
+    initGrid();
+  });
+
+  // ── FILTERS ─────────────────────────────────────────────────────────────────
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      renderListView();
+    });
+  });
+
+  // ── LIST VIEW ───────────────────────────────────────────────────────────────
+  function renderListView() {
+    const loading   = document.getElementById('listLoading');
+    const empty     = document.getElementById('listEmpty');
+    const container = document.getElementById('listContainer');
+    const countEl   = document.getElementById('listCount');
+
+    loading.classList.add('hidden');
+
+    const today = todayStr();
+    const filtered = allBookings.filter(b => {
+      if (currentFilter === 'upcoming') return b.date >= today && b.status === 'pending';
+      return true;
+    });
+
+    countEl.textContent = `${filtered.length} turno${filtered.length !== 1 ? 's' : ''}`;
+
+    if (!filtered.length) {
+      container.classList.add('hidden');
+      empty.classList.remove('hidden');
+      return;
+    }
+
+    empty.classList.add('hidden');
+    container.classList.remove('hidden');
+
+    // Group by date
+    const grouped = {};
+    filtered.forEach(b => {
+      if (!grouped[b.date]) grouped[b.date] = [];
+      grouped[b.date].push(b);
+    });
+
+    container.innerHTML = Object.entries(grouped).map(([date, bookings]) => {
+      const [y, m, d] = date.split('-').map(Number);
+      const label = new Date(y, m - 1, d).toLocaleDateString('es-AR', {
+        weekday: 'long', day: 'numeric', month: 'long',
+      });
+      const rows = bookings.map(b => bookingRow(b)).join('');
+      return `
+        <div class="blist__group">
+          <div class="blist__date">${capitalize(label)}</div>
+          <div class="blist__rows">${rows}</div>
+        </div>`;
+    }).join('');
+
+    container.querySelectorAll('.blist__cancel').forEach(btn => {
+      btn.addEventListener('click', () => openModal(btn.dataset.id));
+    });
+  }
+
+  function bookingRow(b) {
+    const cancelled = b.status === 'cancelled';
+    return `
+      <div class="blist__row ${cancelled ? 'blist__row--cancelled' : ''}">
+        <div class="blist__time">${b.time}</div>
+        <div class="blist__info">
+          <strong>${b.service}</strong>
+          <span>${b.client_name} · ${b.client_phone}</span>
+        </div>
+        <div class="blist__price">$${Number(b.price).toLocaleString('es-AR')}</div>
+        <div class="blist__status">
+          ${cancelled
+            ? '<span class="badge badge--cancelled">Cancelado</span>'
+            : `<button class="blist__cancel btn btn--outline btn--sm btn--danger" data-id="${b.id}">Cancelar</button>`
+          }
+        </div>
+      </div>`;
+  }
+
+  // ── GRID VIEW ───────────────────────────────────────────────────────────────
+  function initGrid() {
+    const now = new Date();
+    gridYear  = now.getFullYear();
+    gridMonth = now.getMonth();
+    renderGrid();
+  }
+
+  function renderGrid() {
+    const label = new Date(gridYear, gridMonth, 1)
+      .toLocaleDateString('es-AR', { month: 'long', year: 'numeric' });
+    document.getElementById('gridMonthLabel').textContent =
+      label.charAt(0).toUpperCase() + label.slice(1);
+
+    const firstDow    = new Date(gridYear, gridMonth, 1).getDay();
+    const daysInMonth = new Date(gridYear, gridMonth + 1, 0).getDate();
+    const today       = todayStr();
+
+    const daysEl = document.getElementById('gridDays');
+    daysEl.innerHTML = '';
+
+    // Empty cells
+    for (let i = 0; i < firstDow; i++) {
+      const el = document.createElement('div');
+      el.className = 'agrid__cell agrid__cell--empty';
+      daysEl.appendChild(el);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateStr  = `${gridYear}-${pad(gridMonth + 1)}-${pad(d)}`;
+      const isToday  = dateStr === today;
+      const isPast   = dateStr < today;
+      const dow      = new Date(gridYear, gridMonth, d).getDay();
+      const isClosed = dow === 0 || dow === 1;
+
+      const dayBookings = allBookings.filter(
+        b => b.date === dateStr && b.status === 'pending'
+      );
+
+      const cell = document.createElement('div');
+      cell.className = 'agrid__cell' +
+        (isToday  ? ' agrid__cell--today'  : '') +
+        (isPast   ? ' agrid__cell--past'   : '') +
+        (isClosed ? ' agrid__cell--closed' : '');
+
+      const badges = dayBookings.slice(0, 3).map(b =>
+        `<button class="agrid__booking" data-id="${b.id}">${b.time} ${b.service.split(' ')[0]}</button>`
+      ).join('');
+
+      const more = dayBookings.length > 3
+        ? `<span class="agrid__more">+${dayBookings.length - 3} más</span>` : '';
+
+      cell.innerHTML = `
+        <span class="agrid__day">${d}</span>
+        ${isClosed ? '<span class="agrid__closed">Cerrado</span>' : badges + more}`;
+
+      daysEl.appendChild(cell);
+    }
+
+    daysEl.querySelectorAll('.agrid__booking').forEach(btn => {
+      btn.addEventListener('click', () => openModal(btn.dataset.id));
+    });
+  }
+
+  document.getElementById('gridPrev').addEventListener('click', () => {
+    if (--gridMonth < 0) { gridMonth = 11; gridYear--; }
+    renderGrid();
+  });
+  document.getElementById('gridNext').addEventListener('click', () => {
+    if (++gridMonth > 11) { gridMonth = 0; gridYear++; }
+    renderGrid();
+  });
+
+  // ── MODAL ───────────────────────────────────────────────────────────────────
+  function openModal(id) {
+    activeBooking = allBookings.find(b => b.id === id);
+    if (!activeBooking) return;
+
+    const b = activeBooking;
+    const [y, m, d] = b.date.split('-').map(Number);
+    const dateStr = new Date(y, m - 1, d).toLocaleDateString('es-AR', {
+      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+    });
+
+    document.getElementById('modalContent').innerHTML = `
+      <div class="booking__summary" style="margin-bottom:0">
+        ${summaryRow('Servicio',    b.service)}
+        ${summaryRow('Fecha',       capitalize(dateStr))}
+        ${summaryRow('Horario',     b.time + ' hs')}
+        ${summaryRow('Precio',      '$' + Number(b.price).toLocaleString('es-AR'))}
+        ${summaryRow('Cliente',     b.client_name)}
+        ${summaryRow('WhatsApp',    b.client_phone)}
+        ${summaryRow('Estado',      b.status === 'pending' ? 'Confirmado' : 'Cancelado')}
+      </div>`;
+
+    const cancelBtn = document.getElementById('modalCancelBtn');
+    cancelBtn.style.display = b.status === 'cancelled' ? 'none' : '';
+
+    document.getElementById('bookingModal').classList.remove('hidden');
+  }
+
+  function closeModal() {
+    document.getElementById('bookingModal').classList.add('hidden');
+    activeBooking = null;
+  }
+
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+  document.getElementById('modalBackdrop').addEventListener('click', closeModal);
+
+  document.getElementById('modalCancelBtn').addEventListener('click', async () => {
+    if (!activeBooking) return;
+    if (!confirm(`¿Cancelar el turno de ${activeBooking.client_name}?`)) return;
+
+    const { error } = await db
+      .from('bookings')
+      .update({ status: 'cancelled' })
+      .eq('id', activeBooking.id);
+
+    if (error) { alert('Error al cancelar. Intentá de nuevo.'); return; }
+
+    // Update local state
+    const idx = allBookings.findIndex(b => b.id === activeBooking.id);
+    if (idx !== -1) allBookings[idx].status = 'cancelled';
+
+    closeModal();
+    if (currentView === 'list') renderListView();
+    else renderGrid();
+  });
+
+  // ── HELPERS ─────────────────────────────────────────────────────────────────
+  function todayStr() {
+    const n = new Date();
+    return `${n.getFullYear()}-${pad(n.getMonth() + 1)}-${pad(n.getDate())}`;
+  }
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function summaryRow(label, value) {
+    return `
+      <div class="booking__summary-row">
+        <span>${label}</span><strong>${value}</strong>
+      </div>`;
+  }
+
+})();
+</script>
+
+</body>
+</html>

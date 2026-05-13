@@ -30,15 +30,17 @@
   const stepperEls = document.querySelectorAll('.stepper__step');
   const panelEls   = document.querySelectorAll('.booking__panel');
 
-  function goToStep(n) {
+  function goToStep(n, scroll = true) {
     panelEls.forEach((p, i) => p.classList.toggle('active', i + 1 === n));
     stepperEls.forEach((s, i) => {
       s.classList.remove('active', 'done');
       if (i + 1 === n)    s.classList.add('active');
       else if (i + 1 < n) s.classList.add('done');
     });
-    const section = document.getElementById('reservar');
-    if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (scroll) {
+      const section = document.getElementById('reservar');
+      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
   // ─── STEP 1: SERVICE ────────────────────────────────────────────────────────
@@ -277,6 +279,9 @@
 
       showSuccess(name, data.cancel_token);
 
+      // Fire-and-forget: notificar por email al admin
+      notifyAdmin({ name, phone });
+
     } catch (e) {
       showError('Sin conexión. Verificá tu internet e intentá de nuevo.');
       console.error(e);
@@ -312,6 +317,25 @@
       `¡Nos vemos!`
     );
     document.getElementById('successWhatsApp').href = `https://wa.me/5491155778760?text=${waMsg}`;
+  }
+
+  function notifyAdmin({ name, phone }) {
+    if (!db) return;
+    fetch(`${SUPABASE_URL}/functions/v1/notify-booking`, {
+      method: 'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+      body: JSON.stringify({
+        service:      state.service,
+        price:        parseInt(state.price),
+        date:         toDateStr(state.date),
+        time:         state.time,
+        client_name:  name,
+        client_phone: phone,
+      }),
+    }).catch(() => {}); // silencioso — no afecta al cliente si falla
   }
 
   function whatsAppFallback(name, phone) {
@@ -367,6 +391,6 @@
 
   // ─── INIT ───────────────────────────────────────────────────────────────────
   initCalendar();
-  goToStep(1);
+  goToStep(1, false); // false = no scroll on initial load
 
 })();
