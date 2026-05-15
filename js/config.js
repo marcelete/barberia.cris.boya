@@ -7,4 +7,4 @@
 // ============================================================
 
 window.SUPABASE_URL      = 'https://nwaxbyezughgmtssekmm.supabase.co/';
-window.SUPABASE_ANON_KEY = '13c96218-4787-422d-8e59-26aafa8396e4';
+window.SUPABASE_ANON_KEY = 'sb_publishable_b932eqWqj9r3KUKhfOts0Q_W10nxije';
