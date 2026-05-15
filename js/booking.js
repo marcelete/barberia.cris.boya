@@ -245,13 +245,19 @@
   async function confirmBooking() {
     const nameEl  = document.getElementById('clientName');
     const phoneEl = document.getElementById('clientPhone');
+    const emailEl = document.getElementById('clientEmail');
     const name    = nameEl.value.trim();
     const phone   = phoneEl.value.trim();
+    const email   = emailEl.value.trim();
 
     clearErrors();
     let valid = true;
     if (!name)  { markError(nameEl,  'Ingresá tu nombre'); valid = false; }
     if (!phone) { markError(phoneEl, 'Ingresá tu WhatsApp'); valid = false; }
+    if (!email) { markError(emailEl, 'Ingresá tu correo'); valid = false; }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      markError(emailEl, 'El correo no es válido'); valid = false;
+    }
     if (!valid) return;
 
     setLoading(true);
@@ -274,6 +280,7 @@
           time:         state.time,
           client_name:  name,
           client_phone: phone,
+          client_email: email,
         })
         .select('cancel_token')
         .single();
@@ -290,10 +297,10 @@
         return;
       }
 
-      showSuccess(name, data.cancel_token);
+      showSuccess(name, email, data.cancel_token);
 
       // Fire-and-forget: notificar por email al admin
-      notifyAdmin({ name, phone });
+      notifyAdmin({ name, phone, email });
 
     } catch (e) {
       showError('Sin conexión. Verificá tu internet e intentá de nuevo.');
@@ -302,7 +309,7 @@
     }
   }
 
-  function showSuccess(name, cancelToken) {
+  function showSuccess(name, email, cancelToken) {
     document.getElementById('step4Form').classList.add('hidden');
 
     const successEl = document.getElementById('bookingSuccess');
@@ -332,7 +339,7 @@
     document.getElementById('successWhatsApp').href = `https://wa.me/5491155778760?text=${waMsg}`;
   }
 
-  function notifyAdmin({ name, phone }) {
+  function notifyAdmin({ name, phone, email }) {
     if (!db) return;
     fetch(`${SUPABASE_URL}/functions/v1/notify-booking`, {
       method: 'POST',
@@ -347,6 +354,7 @@
         time:         state.time,
         client_name:  name,
         client_phone: phone,
+        client_email: email,
       }),
     }).catch(() => {}); // silencioso — no afecta al cliente si falla
   }

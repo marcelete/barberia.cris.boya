@@ -16,9 +16,9 @@ Deno.serve(async (req: Request) => {
     return json({ success: false, error: 'Body inválido' }, 400);
   }
 
-  const { service, price, date, time, client_name, client_phone } = body as {
+  const { service, price, date, time, client_name, client_phone, client_email } = body as {
     service: string; price: number; date: string;
-    time: string; client_name: string; client_phone: string;
+    time: string; client_name: string; client_phone: string; client_email?: string;
   };
 
   // Formatear fecha legible
@@ -51,7 +51,8 @@ Deno.serve(async (req: Request) => {
             ${row('Horario',     `${time} hs`)}
             ${row('Precio',      priceStr)}
             ${row('Cliente',     String(client_name))}
-            ${row('WhatsApp',    String(client_phone), true)}
+            ${row('WhatsApp',    String(client_phone))}
+            ${row('Email',       client_email ? String(client_email) : '—', true)}
           </table>
         </td></tr>
 
