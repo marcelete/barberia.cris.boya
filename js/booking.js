@@ -270,7 +270,9 @@
     }
 
     try {
-      const { data, error } = await db
+      const cancelToken = generateUUID();
+
+      const { error } = await db
         .from('bookings')
         .insert({
           service:      state.service,
@@ -281,24 +283,22 @@
           client_name:  name,
           client_phone: phone,
           client_email: email,
-        })
-        .select('cancel_token')
-        .single();
+          cancel_token: cancelToken,
+        });
 
       if (error) {
         // 23505 = unique_violation (slot already taken)
         if (error.code === '23505') {
           showError('Este horario fue reservado hace un momento. Volvé atrás y elegí otro turno.');
         } else {
-          const detail = error.message || error.hint || error.code || JSON.stringify(error);
-          showError(`Hubo un problema al reservar. Por favor intentá de nuevo.\n[Debug: ${detail}]`);
+          showError('Hubo un problema al reservar. Por favor intentá de nuevo.');
           console.error('[Barber Boya] Error Supabase insert:', JSON.stringify(error, null, 2));
         }
         setLoading(false);
         return;
       }
 
-      showSuccess(name, email, data.cancel_token);
+      showSuccess(name, email, cancelToken);
 
       // Fire-and-forget: notificar por email al admin
       notifyAdmin({ name, phone, email });
@@ -404,6 +404,14 @@
     document.querySelectorAll('.input--error').forEach(el => el.classList.remove('input--error'));
     document.querySelectorAll('.field-error').forEach(el => el.remove());
     document.getElementById('bookingError').classList.add('hidden');
+  }
+
+  function generateUUID() {
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+      const r = Math.random() * 16 | 0;
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
   }
 
   function pad(n) { return String(n).padStart(2, '0'); }
