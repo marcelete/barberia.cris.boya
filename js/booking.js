@@ -290,8 +290,9 @@
         if (error.code === '23505') {
           showError('Este horario fue reservado hace un momento. Volvé atrás y elegí otro turno.');
         } else {
-          showError('Hubo un problema al reservar. Por favor intentá de nuevo.');
-          console.error(error);
+          const detail = error.message || error.hint || error.code || JSON.stringify(error);
+          showError(`Hubo un problema al reservar. Por favor intentá de nuevo.\n[Debug: ${detail}]`);
+          console.error('[Barber Boya] Error Supabase insert:', JSON.stringify(error, null, 2));
         }
         setLoading(false);
         return;
@@ -303,8 +304,9 @@
       notifyAdmin({ name, phone, email });
 
     } catch (e) {
-      showError('Sin conexión. Verificá tu internet e intentá de nuevo.');
-      console.error(e);
+      const detail = e.message || String(e);
+      showError(`Sin conexión o error inesperado.\n[Debug: ${detail}]`);
+      console.error('[Barber Boya] Exception al confirmar turno:', e);
       setLoading(false);
     }
   }
