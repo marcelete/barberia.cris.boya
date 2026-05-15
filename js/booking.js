@@ -388,7 +388,7 @@
 
   function showError(msg) {
     const el = document.getElementById('bookingError');
-    el.textContent = msg;
+    el.innerHTML = msg.replace(/\n/g, '<br>');
     el.classList.remove('hidden');
   }
 
