@@ -37,7 +37,7 @@ Deno.serve(async (req: Request) => {
     .update({ status: 'cancelled' })
     .eq('cancel_token', token)
     .neq('status', 'cancelled')
-    .select('date, time, service, client_name')
+    .select('date, time, service, client_name, client_phone')
     .single();
 
   if (error || !data) {
