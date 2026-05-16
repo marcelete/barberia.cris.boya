@@ -299,8 +299,9 @@
 
       showSuccess(name, email, data.cancel_token);
 
-      // Fire-and-forget: notificar por email al admin
-      notifyAdmin({ name, phone, email });
+      // Fire-and-forget: notificar al admin y al cliente por email
+      const cancelUrl = buildCancelUrl(data.cancel_token);
+      notifyAdmin({ name, phone, email, cancelUrl });
 
     } catch (e) {
       showError('Sin conexión. Verificá tu internet e intentá de nuevo.');
@@ -324,7 +325,7 @@
     document.getElementById('successDetail').textContent =
       `${state.service}  ·  ${dateStr}  ·  ${state.time} hs  ·  $${price.toLocaleString('es-AR')}`;
 
-    const cancelUrl = `${window.location.origin}${window.location.pathname.replace('index.html','').replace(/\/$/, '')}/cancelar.html?token=${cancelToken}`;
+    const cancelUrl = buildCancelUrl(cancelToken);
     document.getElementById('successCancelLink').href        = cancelUrl;
     document.getElementById('successCancelDisplay').textContent = cancelUrl;
 
@@ -339,7 +340,11 @@
     document.getElementById('successWhatsApp').href = `https://wa.me/5491155778760?text=${waMsg}`;
   }
 
-  function notifyAdmin({ name, phone, email }) {
+  function buildCancelUrl(token) {
+    return `${window.location.origin}${window.location.pathname.replace('index.html','').replace(/\/$/, '')}/cancelar.html?token=${token}`;
+  }
+
+  function notifyAdmin({ name, phone, email, cancelUrl }) {
     if (!db) return;
     fetch(`${SUPABASE_URL}/functions/v1/notify-booking`, {
       method: 'POST',
@@ -355,6 +360,7 @@
         client_name:  name,
         client_phone: phone,
         client_email: email,
+        cancel_url:   cancelUrl,
       }),
     }).catch(() => {}); // silencioso — no afecta al cliente si falla
   }
